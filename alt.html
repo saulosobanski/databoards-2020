@@ -1,0 +1,131 @@
+<html>
+<head>
+  <title>[NSC] Dashboards de Redação 2020</title>
+</head>
+<body style="margin:0px;padding:0px;overflow:hidden">
+
+  <button id="full-button" onclick="toggleFullScreen()">F</button>
+  <button id="reload-button" onclick="requestReload()">R</button>
+  <iframe id="report-1" src="https://datastudio.google.com/embed/reporting/2df7484e-30c6-45f4-9562-7145c75ad599/page/glj2" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:0%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" allowfullscreen></iframe>
+  <iframe id="report-2" src="" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:0%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" allowfullscreen></iframe>
+  <iframe id="report-3" src="" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:0%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" allowfullscreen></iframe>
+
+<style>
+  #full-button, #reload-button {
+    border: none;
+    background: rgba(255,255,255,0.1);
+    z-index: 99999;
+    position: fixed;
+    color: #fff;
+    padding: 5px;
+    font-weight: 800;
+  }
+  
+  .hidden {
+    display: none;
+  }
+
+  #reload-button {
+    left: 2%;
+  }
+</style>
+
+<script>
+
+var currentReport = '';
+
+function get(el) {
+ return document.getElementById(el);
+}
+
+function showReportOne() {
+  get('report-1').style.height = '100%';
+  get('report-2').style.height = '0%';
+  get('report-3').style.height = '0%';
+  currentReport = '1';
+  return;
+}
+  
+function showReportTwo() {
+  get('report-1').style.height = '0%';
+  get('report-2').style.height = '100%';
+  get('report-3').style.height = '0%';
+  currentReport = '2';
+  return;
+}
+  
+function showReportThree() {
+  get('report-1').style.height = '0%';
+  get('report-2').style.height = '0%';
+  get('report-3').style.height = '100%';
+  currentReport = '3';
+  return;
+}
+
+function toggleReports() {
+
+  switch (currentReport) {
+    case '1':
+      console.log('Showing report #2');
+      showReportTwo();
+      break;
+    case '2':
+      console.log('Showing report #3');
+      showReportThree();
+      break;
+    case '3':
+      console.log('Showing report #1');
+      showReportOne();
+      break;
+    }
+}
+
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
+}
+
+function requestReload() {
+  location.reload();
+}
+
+// Activate when loaded
+
+get('report-1').addEventListener("load", function(event) { 
+  setTimeout(function(){
+    get('report-2').src = 'https://datastudio.google.com/embed/reporting/2df7484e-30c6-45f4-9562-7145c75ad599/page/MrT9';
+  }, 120000);
+});
+
+get('report-2').addEventListener("load", function(event) {
+  setTimeout(function(){
+    get('report-3').src = 'https://datastudio.google.com/embed/reporting/2df7484e-30c6-45f4-9562-7145c75ad599/page/i9k9';
+  }, 120000);
+  currentReport = '3';
+  setInterval(toggleReports, 30000);
+});
+
+document.addEventListener('fullscreenchange', (event) => {
+  if (document.fullscreenElement) {
+    console.log(`Element: ${document.fullscreenElement.id} entered full-screen mode.`);
+//    document.getElementById('full-button').classList.toggle('hidden');
+//    document.getElementById('reload-button').classList.toggle('hidden');
+
+  } else {
+    console.log('Leaving full-screen mode.');
+  }
+});
+
+</script>  
+</body>
+</html>

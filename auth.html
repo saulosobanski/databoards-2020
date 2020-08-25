@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title>[NSC] Push Auth</title>
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+       var OneSignal = window.OneSignal || [];
+    var initConfig = {
+        appId: "4b964b45-9170-412e-8ac6-dd74b9535472",
+        notifyButton: {
+            enable: true
+        },
+    };
+    OneSignal.push(function () {
+        OneSignal.SERVICE_WORKER_PARAM = { scope: '/databoards-2020/' };
+        OneSignal.SERVICE_WORKER_PATH = 'databoards-2020/OneSignalSDKWorker.js'
+        OneSignal.SERVICE_WORKER_UPDATER_PATH = 'databoards-2020/OneSignalSDKUpdaterWorker.js'
+        OneSignal.init(initConfig);
+    });
+  </script>
+</head>
+<body></body>
+</html>
